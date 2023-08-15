@@ -56,10 +56,10 @@ const main = async () => {
   }
 };
 
-const app = () => {
-  cron.schedule('0 * * * *', async () => {
-    main()
-  })
-}
+// const app = () => {
+//   cron.schedule('0 * * * *', async () => {
+//     main()
+//   })
+// }
 
-app()
+main()
