@@ -1,5 +1,5 @@
 node_modules
-src/credentials.json
+credentials.json
 src/config.ts
 dist
 .DS_Store
