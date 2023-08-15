@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "ts-node --esm ./src/index.ts"
+    "start": "ts-node --esm ./src/index.ts",
+    "build": "tsc && node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +17,6 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "googleapis": "^124.0.0",
-    "node-cron": "^3.0.2"
+    "googleapis": "^124.0.0"
   }
 }
