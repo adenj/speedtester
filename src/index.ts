@@ -8,23 +8,23 @@ import { appendToSheet } from "./appendToSheet.js";
 import { bytesToMbps } from "./helpers/bytesToMbps.js";
 import { formatDateTime } from "./helpers/formatDateTime.js";
 
-const CREDENTIALS_PATH = `${process.cwd()}/credentials.json`;
-
-
-// Load credentials from the service account JSON file
-const credentials = JSON.parse(fs.readFileSync(CREDENTIALS_PATH, "utf8"));
-console.log(credentials.client_email);
-const auth = new google.auth.JWT(
-  credentials.client_email,
-  null,
-  credentials.private_key,
-  ["https://www.googleapis.com/auth/spreadsheets"]
-);
 
 const main = async () => {
-  console.log(CREDENTIALS_PATH)
+  const CREDENTIALS_PATH = `${process.cwd()}/credentials.json`;
+
+
+  // Load credentials from the service account JSON file
+  const credentials = JSON.parse(fs.readFileSync(CREDENTIALS_PATH, "utf8"));
+  const auth = new google.auth.JWT(
+    credentials.client_email,
+    null,
+    credentials.private_key,
+    ["https://www.googleapis.com/auth/spreadsheets"]
+  );
   try {
+    console.log('Running speedtest...')
     const speedtestResult = await runSpeedtest();
+    console.log('Parsing speedtest results')
     const result: SpeedtestResults = JSON.parse(speedtestResult);
     const { date, time } = formatDateTime(result.timestamp)
     const row = [
@@ -41,8 +41,9 @@ const main = async () => {
       bytesToMbps(result.upload.bandwidth),
       `${result.packetLoss}%`,
     ]
+    console.log('Validating sheet name')
     const sheetName = await validateSheet(result.timestamp, auth)
-
+    console.log('Appending to sheet')
     await appendToSheet(row, sheetName, auth);
   } catch (error) {
     console.error(
