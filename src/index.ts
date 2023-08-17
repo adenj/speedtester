@@ -23,6 +23,9 @@ const main = async () => {
   try {
     console.log('Running speedtest...')
     const speedtestResult: SpeedtestResults = await runSpeedtest().then(async (res) => {
+      console.log("=====")
+      console.log(res)
+      console.log("=====")
       return await JSON.parse(res)
     })
     // const result: SpeedtestResults = await JSON.parse(speedtestResult);
