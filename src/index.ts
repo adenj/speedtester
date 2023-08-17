@@ -24,7 +24,7 @@ const main = async () => {
     console.log('Running speedtest...')
     const speedtestResult = await runSpeedtest();
     console.log('Parsing speedtest results')
-    const result: SpeedtestResults = JSON.parse(speedtestResult);
+    const result: SpeedtestResults = await JSON.parse(speedtestResult);
     const { date, time } = formatDateTime(result.timestamp)
     const row = [
       speedtestResult,
