@@ -22,26 +22,27 @@ const main = async () => {
   );
   try {
     console.log('Running speedtest...')
-    const speedtestResult = await runSpeedtest();
-    console.log('Parsing speedtest results')
-    const result: SpeedtestResults = await JSON.parse(speedtestResult);
-    const { date, time } = formatDateTime(result.timestamp)
+    const speedtestResult: SpeedtestResults = await runSpeedtest().then(async (res) => {
+      return await JSON.parse(res)
+    })
+    // const result: SpeedtestResults = await JSON.parse(speedtestResult);
+    const { date, time } = formatDateTime(speedtestResult.timestamp)
     const row = [
-      speedtestResult,
-      result.result.id,
-      result.result.url,
+      JSON.stringify(speedtestResult),
+      speedtestResult.result.id,
+      speedtestResult.result.url,
       date,
       time,
-      result.server.name,
-      result.server.location,
-      result.isp,
-      `${Math.round(result.ping.latency)}ms`,
-      bytesToMbps(result.download.bandwidth),
-      bytesToMbps(result.upload.bandwidth),
-      `${result.packetLoss}%`,
+      speedtestResult.server.name,
+      speedtestResult.server.location,
+      speedtestResult.isp,
+      `${Math.round(speedtestResult.ping.latency)}ms`,
+      bytesToMbps(speedtestResult.download.bandwidth),
+      bytesToMbps(speedtestResult.upload.bandwidth),
+      `${speedtestResult.packetLoss}%`,
     ]
     console.log('Validating sheet name')
-    const sheetName = await validateSheet(result.timestamp, auth)
+    const sheetName = await validateSheet(speedtestResult.timestamp, auth)
     console.log('Appending to sheet')
     await appendToSheet(row, sheetName, auth);
   } catch (error) {
