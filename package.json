@@ -17,6 +17,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@googleapis/sheets": "^5.0.3",
     "googleapis": "^124.0.0"
   }
 }

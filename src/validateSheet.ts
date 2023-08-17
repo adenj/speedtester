@@ -1,7 +1,7 @@
-import { google, Auth } from "googleapis";
+import google from '@googleapis/sheets'
 import { SPREADSHEET_ID } from "./config.js";
 
-export const validateSheet = async (timestamp: string, auth: Auth.JWT) => {
+export const validateSheet = async (timestamp: string, auth: any) => {
 	const sheetTitle = formatSheetTitle(timestamp)
 	const sheets = google.sheets({ version: 'v4', auth });
 	try {

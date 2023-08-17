@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import google from "@googleapis/sheets";
 import { SPREADSHEET_ID } from "./config.js";
 
 // Add to google sheet

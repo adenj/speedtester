@@ -1,5 +1,5 @@
 import fs from "fs";
-import { google } from "googleapis";
+import { auth as googleAuth, sheets } from '@googleapis/sheets'
 
 import { SpeedtestResults } from "./types.js";
 import { runSpeedtest } from "./runSpeedtest.js";
@@ -12,10 +12,9 @@ import { formatDateTime } from "./helpers/formatDateTime.js";
 const main = async () => {
   const CREDENTIALS_PATH = `${process.cwd()}/credentials.json`;
 
-
   // Load credentials from the service account JSON file
   const credentials = JSON.parse(fs.readFileSync(CREDENTIALS_PATH, "utf8"));
-  const auth = new google.auth.JWT(
+  const auth = new googleAuth.JWT(
     credentials.client_email,
     null,
     credentials.private_key,
